@@ -1,0 +1,24 @@
+{
+  "name": "horizontal-scroll",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./horizontal-scroll.js",
+  "scripts": {
+    "build": "webpack",
+    "prepublishOnly": "npm run build",
+    "watch": "webpack --watch"
+  },
+  "author": "Johnny Hu <heyitsjhu@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "chai": "^4.0.2",
+    "coveralls": "^2.13.1",
+    "istanbul": "^1.0.0-alpha",
+    "mocha": "^3.4.2",
+    "webpack": "^3.10.0"
+  }
+}
