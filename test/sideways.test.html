@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<style>
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  section {
+    height: 100vh;
+    width: 100%;
+    background-color: #eee;
+  }
+
+  section:nth-child(2) {
+    display: flex;
+    background-color: green;
+    overflow: hidden;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .item {
+    min-width: 100vw;
+    background-color: green;
+  }
+  .item:nth-child(2n) {
+    background-color: blue;
+  }
+
+  .sideways {
+    width: 100%;
+    min-width: 100%;
+    min-height: 100%;
+      display: flex;
+      flex-flow: row nowrap;
+      overflow-x: auto;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+  }
+</style>
+<body>
+  <section></section>
+  <section>
+    <div class="sideways">
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+    </div>
+  </section>
+  <section></section>
+
+<script src="../dist/sideways.min.js"></script>
+<script>
+  new Sideways({target: '.sideways' });
+</script>
+</body>
+</html>

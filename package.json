@@ -1,8 +1,8 @@
 {
-  "name": "horizontal-scroll",
+  "name": "sideways",
   "version": "0.0.1",
   "description": "",
-  "main": "./horizontal-scroll.js",
+  "main": "./dist/sideways.min.js",
   "scripts": {
     "build": "webpack",
     "prepublishOnly": "npm run build",

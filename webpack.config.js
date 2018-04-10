@@ -2,12 +2,11 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './horizontal-scroll.js',
+  entry: './src/sideways.js',
   output: {
-    path: '.',
-    filename: 'horizontal-scroll.min.js',
-    libraryTarget: 'var',
-    library: 'hScroll'
+    path: __dirname + '/dist/',
+    filename: 'sideways.min.js',
+    libraryTarget: 'umd'
   },
   module: {
     rules: [
