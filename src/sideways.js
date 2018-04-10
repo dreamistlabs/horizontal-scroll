@@ -13,54 +13,41 @@ export class Sideways {
     this.targetFullWidth = this.targetElement.scrollWidth;
     this.targetInnerWidth = this.targetElement.offsetWidth;
     this.parentElement = this.targetElement.parentElement;
-    this.parentPosition = this.parentElement.getBoundingClientRect().y;
+    this.parentPosition = this.parentElement.offsetTop;
 
     this.scrollableRange = this.targetFullWidth - this.targetInnerWidth;
     this.windowScrollPosition = window.pageYOffset;
     this.isActive = false;
-    this.isAtBeginningOfRange = true;
-    this.isAtEndOfRange = !this.isAtBeginningOfRange;
     this.mouseWheelHandler = this.handleMouseWheel.bind(this);
 
-    // console.log(this);
-    this.setScrollDetection();
+    this.setScrollEventListener();
   }
 
-  setScrollDetection() {
-    document.addEventListener('scroll', function() {
-      let elementOnScreen = window.pageYOffset >= this.parentPosition;
+  setScrollEventListener() {
+    document.addEventListener('scroll', function(e) {
+      let elementIsAtTopOfScreen = (window.pageYOffset >= this.parentPosition);
+      let withinAcceptablePixelRange = (window.pageYOffset - this.parentPosition) < 50;
 
-      if (elementOnScreen && !this.isActive) {
+      if (elementIsAtTopOfScreen && withinAcceptablePixelRange && !this.isActive) {
         this.isActive = true;
-
-        if (this.isAtBeginningOfRange) {
-          this.targetElement.scrollLeft = 1;
-          console.log('coming from the top of the page');
-        } else if (this.isAtEndOfRange ) {
-          console.log('coming from the bottom of the page');
-        }
+        this.targetElement.scrollLeft += 1;
         window.addEventListener('wheel', this.mouseWheelHandler);
       }
     }.bind(this));
   }
 
   handleMouseWheel(e) {
+    let isAtBeginningOfRange = this.targetElement.scrollLeft === 0;
+    let isAtEndOfRange = this.targetElement.scrollLeft >= this.scrollableRange;
     let scrollSpeed = event.deltaY;
     this.targetElement.scrollLeft += scrollSpeed;
-    console.log(this.targetElement.scrollLeft, scrollSpeed);
-    if (this.targetElement.scrollLeft >= this.scrollableRange && this.isActive) {
-      this.isAtEndOfRange = true;
+    console.log(this.isActive, isAtBeginningOfRange, isAtEndOfRange);
+    window.scroll({ top: this.parentPosition + 1 });
+    if (this.isActive && (isAtBeginningOfRange || isAtEndOfRange)) {
       this.isActive = false;
-      console.log('removing, continue scrolling down...')
-      window.removeEventListener('wheel', this.mouseWheelHandler);
-    } else if (this.targetElement.scrollLeft === 0 && this.isActive) {
-      this.isAtBeginningOfRange = true;
-      this.isActive = false;
-      console.log('removing, continue scrolling up...')
+      console.log('removing, continue scrolling...')
       window.removeEventListener('wheel', this.mouseWheelHandler);
     }
-
-    console.log(this.isAtBeginningOfRange, this.isAtEndOfRange);
     e.preventDefault();
   }
 }
